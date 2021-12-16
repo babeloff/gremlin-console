@@ -1,4 +1,4 @@
-package edu.vanderbilt.mesolab.symcps
+package io.github.babeloff.gremlin
 
 import groovy.console.ui.Console
 import io.github.classgraph.ClassGraph

@@ -2,11 +2,14 @@
 plugins {
     id("groovy")
     id("application")
+    // https://graalvm.github.io/native-build-tools/latest/index.html
+    id("org.graalvm.buildtools.native") version "0.9.8"
 }
 
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))
+        vendor.set(JvmVendorSpec.matching("GraalVM Community"))
     }
 }
 
@@ -37,11 +40,29 @@ dependencies {
 }
 
 application {
-    mainClass.set("edu.vanderbilt.mesolab.symcps.GremlinConsole")
+    mainClass.set("io.github.babeloff.gremlin.GremlinConsole")
 }
 
 tasks {
     named<Test>("test") {
         useJUnitPlatform()
     }
+}
+
+graalvmNative {
+    binaries {
+        named("main") {
+            javaLauncher.set(javaToolchains.launcherFor {
+                languageVersion.set(JavaLanguageVersion.of(11))
+                vendor.set(JvmVendorSpec.matching("GraalVM Community"))
+            })
+            imageName.set("gremlin-console")
+            mainClass.set("io.github.babeloff.gremlin.GremlinConsole")
+            useFatJar.set(true)
+            debug.set(true)
+            verbose.set(true)
+            runtimeArgs.add("--help")
+        }
+    }
+
 }

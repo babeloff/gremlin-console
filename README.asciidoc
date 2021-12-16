@@ -1,4 +1,4 @@
-:src-dir: app/src/main/groovy/edu/vanderbilt/mesolab/symcps
+:src-dir: app/src/main/groovy/io/github/babeloff/gremlin
 :gradle-version: 7.3.2
 
 = Gremlin Console Application
@@ -19,7 +19,7 @@ An extension to the GroovyConsole for use with Gremlin / Tinkerpop scripts
     └── src
         ├── main
         │   └── groovy // <5>
-        │       └── edu.vanderbilt.mesolab.symcps
+        │       └── io.github.babeloff.gremlin
         │           └── GremlinConsole.groovy
         └── test
             └── groovy // <6>
@@ -100,6 +100,36 @@ https://gradle.com/s/5u4w3gxeurtd2
 ----
 
 Click the link and explore which tasks where executed, which dependencies where downloaded and many more details!
+
+== Build a GraalVM binary
+
+The gradle toolchain detection does not work with Chocolatey, so we have to go with `jabba`.
+The following installs `jabba`.
+[source,powershell]
+----
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Invoke-Expression (Invoke-WebRequest https://github.com/shyiko/jabba/raw/master/install.ps1 -UseBasicParsing).Content
+----
+The following looks at all the packages available in `jabba`.
+[source,powershell]
+----
+jabba ls-remote
+----
+This is the version of graalvm that we are using.
+[source,powershell]
+----
+jabba install graalvm-ce-java11@21.1.0
+----
+
+We also need a compiler.
+[source,powershell]
+----
+choco install visualstudio2022-workload-universalbuildtools
+----
+https://visualstudio.microsoft.com/downloads/#other
+
+In order for the compiler to work we need to have an appropriate environment.
+"Developer PowerShell for VS 2022".
 
 == Summary
 

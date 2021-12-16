@@ -1,5 +1,5 @@
 :samples-dir: /home/tcagent1/agent/work/64493a816be20d5a/promote-projects/gradle/build/git-checkout/subprojects/docs/build/working/samples/install/building-groovy-applications
-:gradle-version: 7.3.1
+:gradle-version: 7.3.2
 
 = Building Groovy Applications Sample
 

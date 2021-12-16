@@ -2,9 +2,13 @@ package edu.vanderbilt.mesolab.symcps
 
 import groovy.console.ui.Console
 import io.github.classgraph.ClassGraph
-import org.apache.tinkerpop.gremlin.driver.remote.DriverRemoteConnection
 
-import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalSource.traversal;
+
+// from gremlin-driver module
+import org.apache.tinkerpop.gremlin.driver.remote.DriverRemoteConnection
+// from gremlin-core module
+import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalSource.traversal
+
 
 /**
  * https://github.com/apache/groovy

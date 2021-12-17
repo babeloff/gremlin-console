@@ -1,6 +1,7 @@
 package io.github.babeloff.gremlin
 
 import groovy.console.ui.Console
+import groovy.util.logging.Slf4j
 import io.github.classgraph.ClassGraph
 
 
@@ -13,6 +14,7 @@ import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalS
 /**
  * https://github.com/apache/groovy
  */
+@Slf4j
 class GremlinConsole {
 
     static main(args) {
@@ -32,10 +34,23 @@ class GremlinConsole {
 
         List<URI> classpath = new ClassGraph().getClasspathURIs()
         classpath.forEach { uri ->
-            console.shell.getClassLoader().addURL(uri.toURL())
+
+            switch (uri.scheme) {
+                case "file":
+                    log.atDebug().log("available library ${uri}")
+                    console.shell.getClassLoader().addURL(uri.toURL())
+                    break
+                default:
+                    log.atWarn().log("unavailable library ${uri} is a ${uri.scheme} ")
+            }
+
         }
 
-        console.run();
+        try {
+            console.run()
+        } catch (IllegalArgumentException ex) {
+            log.atError().log("there is a problem with ${ex.message}")
+        }
     }
 
 }
